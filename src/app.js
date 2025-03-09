@@ -2,3 +2,55 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { TransformControls } from 'three/addons/controls/TransformControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+
+let cameraPersp, cameraOrtho, currentCamera;
+let scene, renderer;
+
+init();
+render();
+
+function init() {
+    renderer = new THREE.WebGLRenderer( { antialias: true } );
+    renderer.setPixelRatio( window.devicePixelRatio );
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    document.body.appendChild( renderer.domElement );
+
+    scene = new THREE.Scene();
+	scene.add( new THREE.GridHelper( 5, 10, 0x888888, 0x444444 ) );
+
+    const aspect = window.innerWidth / window.innerHeight;
+    const frustumSize = 5;
+
+    cameraPersp = new THREE.PerspectiveCamera( 50, aspect, 0.1, 100 );
+    cameraOrtho = new THREE.OrthographicCamera( - frustumSize * aspect, frustumSize * aspect, frustumSize, - frustumSize, 0.1, 100 );
+    currentCamera = cameraPersp;
+
+    orbit = new OrbitControls( currentCamera, renderer.domElement );
+    orbit.update();
+    orbit.addEventListener( 'change', render );
+
+    currentCamera.position.set( 5, 2.5, 5 );
+}
+
+function onWindowResize() {
+    const aspect = window.innerWidth / window.innerHeight;
+
+    cameraPersp.aspect = aspect;
+    cameraPersp.updateProjectionMatrix();
+
+    cameraOrtho.left = cameraOrtho.bottom * aspect;
+    cameraOrtho.right = cameraOrtho.top * aspect;
+    cameraOrtho.updateProjectionMatrix();
+
+    renderer.setSize( window.innerWidth, window.innerHeight );
+
+    render();
+
+}
+
+function render() {
+
+    renderer.render( scene, currentCamera );
+
+}
