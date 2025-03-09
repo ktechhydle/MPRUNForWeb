@@ -29,7 +29,7 @@ function init() {
 
     orbit = new OrbitControls( currentCamera, renderer.domElement );
     orbit.enableDamping = true;
-    orbit.dampingFactor = 0.05;
+    orbit.dampingFactor = 0.1;
     orbit.update();
 
     currentCamera.position.set( 5, 2.5, 5 );
