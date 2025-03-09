@@ -5,7 +5,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 
 let cameraPersp, cameraOrtho, currentCamera;
-let scene, renderer, orbit;
+let scene, renderer, orbit, axesHelper;
 let selectedItem;
 
 init();
@@ -19,7 +19,7 @@ function init() {
 
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0x1e1e1e)
-	scene.add( new THREE.GridHelper( 5, 50, 0x565656, 0x444444 ) );
+	scene.add( new THREE.GridHelper( 100, 50, 0x565656, 0x444444 ) );
 
     const aspect = window.innerWidth / window.innerHeight;
     const frustumSize = 5;
