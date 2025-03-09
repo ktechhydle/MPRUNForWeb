@@ -18,7 +18,8 @@ function init() {
     document.body.appendChild( renderer.domElement );
 
     scene = new THREE.Scene();
-	scene.add( new THREE.GridHelper( 5, 10, 0x888888, 0x444444 ) );
+    scene.background = new THREE.Color(0x1e1e1e)
+	scene.add( new THREE.GridHelper( 5, 50, 0x565656, 0x444444 ) );
 
     const aspect = window.innerWidth / window.innerHeight;
     const frustumSize = 5;
