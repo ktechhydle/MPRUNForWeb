@@ -38,6 +38,21 @@ function init() {
     window.addEventListener( 'resize', onWindowResize );
 }
 
+function toggleCamera(type) {
+    const position = currentCamera.position.clone();
+
+    currentCamera = currentCamera.isPerspectiveCamera ? cameraOrtho : cameraPersp;
+    currentCamera.position.copy( position );
+
+    orbit.object = currentCamera;
+    control.camera = currentCamera;
+
+    currentCamera.lookAt( orbit.target.x, orbit.target.y, orbit.target.z );
+    onWindowResize();
+
+    render();
+}
+
 function onWindowResize() {
     const aspect = window.innerWidth / window.innerHeight;
 
@@ -59,3 +74,5 @@ function render() {
     orbit.update();
     renderer.render( scene, currentCamera );
 }
+
+window.toggleCamera = toggleCamera;

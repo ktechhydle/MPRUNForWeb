@@ -9,6 +9,15 @@ body {
 canvas {
     display: block;
     position: absolute;
-    top: 50px;
-    left: 0;
+}
+
+button {
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+button.active {
+    background-color: #007bff;
+    color: white;
 }
