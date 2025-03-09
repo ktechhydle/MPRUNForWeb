@@ -5,7 +5,8 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 
 let cameraPersp, cameraOrtho, currentCamera;
-let scene, renderer;
+let scene, renderer, orbit;
+let selectedItem;
 
 init();
 render();
@@ -27,10 +28,13 @@ function init() {
     currentCamera = cameraPersp;
 
     orbit = new OrbitControls( currentCamera, renderer.domElement );
+    orbit.enableDamping = true;
+    orbit.dampingFactor = 0.05;
     orbit.update();
-    orbit.addEventListener( 'change', render );
 
     currentCamera.position.set( 5, 2.5, 5 );
+
+    window.addEventListener( 'resize', onWindowResize );
 }
 
 function onWindowResize() {
@@ -46,11 +50,11 @@ function onWindowResize() {
     renderer.setSize( window.innerWidth, window.innerHeight );
 
     render();
-
 }
 
 function render() {
+    requestAnimationFrame( render );
 
+    orbit.update();
     renderer.render( scene, currentCamera );
-
 }
