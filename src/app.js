@@ -24,8 +24,14 @@ function init() {
     const aspect = window.innerWidth / window.innerHeight;
     const frustumSize = 5;
 
-    cameraPersp = new THREE.PerspectiveCamera( 50, aspect, 0.1, 100 );
-    cameraOrtho = new THREE.OrthographicCamera( - frustumSize * aspect, frustumSize * aspect, frustumSize, - frustumSize, 0.1, 100 );
+    cameraPersp = new THREE.PerspectiveCamera( 50, aspect, 0.1, 1000 );
+    cameraOrtho = new THREE.OrthographicCamera(
+        -frustumSize * aspect,
+        frustumSize * aspect,
+        frustumSize,
+        -frustumSize,
+        0.1, 1000
+    );
     currentCamera = cameraPersp;
 
     orbit = new OrbitControls( currentCamera, renderer.domElement );
@@ -50,6 +56,7 @@ function toggleCamera() {
 
     currentCamera = currentCamera.isPerspectiveCamera ? cameraOrtho : cameraPersp;
     currentCamera.position.copy( position );
+    currentCamera.updateProjectionMatrix();
 
     orbit.object = currentCamera;
     control.camera = currentCamera;
