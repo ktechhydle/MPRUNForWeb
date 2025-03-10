@@ -36,9 +36,16 @@ function init() {
     currentCamera.position.set( 5, 2.5, 5 );
 
     window.addEventListener( 'resize', onWindowResize );
+
+    window.addEventListener( 'keydown',  function (event) {
+        switch ( event.key ) {
+            case 'c':
+                toggleCamera();
+        };
+    })
 }
 
-function toggleCamera(type) {
+function toggleCamera() {
     const position = currentCamera.position.clone();
 
     currentCamera = currentCamera.isPerspectiveCamera ? cameraOrtho : cameraPersp;
