@@ -30,7 +30,7 @@ function init() {
         frustumSize * aspect,
         frustumSize,
         -frustumSize,
-        0.1, 1000
+        -100, 1000
     );
     currentCamera = cameraPersp;
 
@@ -73,8 +73,10 @@ function onWindowResize() {
     cameraPersp.aspect = aspect;
     cameraPersp.updateProjectionMatrix();
 
-    cameraOrtho.left = cameraOrtho.bottom * aspect;
-    cameraOrtho.right = cameraOrtho.top * aspect;
+    cameraOrtho.left = -frustumSize * aspect;
+    cameraOrtho.right = frustumSize * aspect;
+    cameraOrtho.top = frustumSize;
+    cameraOrtho.bottom = -frustumSize;
     cameraOrtho.updateProjectionMatrix();
 
     renderer.setSize( window.innerWidth, window.innerHeight );
