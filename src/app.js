@@ -20,6 +20,11 @@ function init() {
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0x1e1e1e)
 	scene.add( new THREE.GridHelper( 100, 50, 0x565656, 0x444444 ) );
+	const light = new THREE.AmbientLight(0xffffff, 1); // Soft white light
+    scene.add(light);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(5, 10, 7).normalize();
+    scene.add(directionalLight);
 
     const aspect = window.innerWidth / window.innerHeight;
     const frustumSize = 5;
