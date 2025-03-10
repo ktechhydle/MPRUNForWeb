@@ -59,7 +59,6 @@ function toggleCamera() {
     currentCamera.updateProjectionMatrix();
 
     orbit.object = currentCamera;
-    control.camera = currentCamera;
 
     currentCamera.lookAt( orbit.target.x, orbit.target.y, orbit.target.z );
     onWindowResize();
