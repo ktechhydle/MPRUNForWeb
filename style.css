@@ -8,7 +8,7 @@ body {
 
 canvas {
     display: block;
-    position: absolute;
+    border-radius: 10px;
 }
 
 button {
