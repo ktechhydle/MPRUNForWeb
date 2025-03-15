@@ -52,6 +52,8 @@ function createScene() {
     const sunPosition = new THREE.Vector3().setFromSphericalCoords( 1, phi, theta );
 
     sky.material.uniforms.sunPosition.value = sunPosition;
+    sky.material.uniforms.turbidity.value = 1.1;
+    sky.material.uniforms.rayleigh.value = 0.95;
 
     scene.add( sky );
 
