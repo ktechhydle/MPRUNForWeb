@@ -47,13 +47,7 @@ function init() {
     currentCamera.position.set( 5, 2.5, 5 );
 
     window.addEventListener( 'resize', onWindowResize );
-
-    window.addEventListener( 'keydown',  function (event) {
-        switch ( event.key ) {
-            case 'c':
-                toggleCamera();
-        };
-    })
+    window.addEventListener( 'keydown',  onWindowKey );
 }
 
 function toggleCamera() {
@@ -86,6 +80,13 @@ function onWindowResize() {
     renderer.setSize( window.innerWidth, window.innerHeight );
 
     render();
+}
+
+function onWindowKey(event) {
+    switch ( event.key ) {
+        case 'c':
+            toggleCamera();
+    };
 }
 
 function render() {
