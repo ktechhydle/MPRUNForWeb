@@ -1,81 +1,78 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { Sky } from 'three/addons/objects/Sky.js';
 import { TransformControls } from 'three/addons/controls/TransformControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 
-let cameraPersp, cameraOrtho, currentCamera;
-let scene, renderer, orbit, axesHelper;
+let camera;
+let scene, renderer, orbit, sky;
 let selectedItem;
 
 init();
+createScene();
 render();
 
 function init() {
     renderer = new THREE.WebGLRenderer( { antialias: true } );
     renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     document.body.appendChild( renderer.domElement );
 
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x1e1e1e)
-	scene.add( new THREE.GridHelper( 100, 50, 0x565656, 0x444444 ) );
 	const light = new THREE.AmbientLight(0xffffff, 1); // Soft white light
     scene.add(light);
     const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
     directionalLight.position.set(5, 10, 7).normalize();
+    directionalLight.castShadow = true;
     scene.add(directionalLight);
 
     const aspect = window.innerWidth / window.innerHeight;
-    const frustumSize = 5;
 
-    cameraPersp = new THREE.PerspectiveCamera( 50, aspect, 0.1, 1000 );
-    cameraOrtho = new THREE.OrthographicCamera(
-        -frustumSize * aspect,
-        frustumSize * aspect,
-        frustumSize,
-        -frustumSize,
-        -100, 1000
-    );
-    currentCamera = cameraPersp;
+    camera = new THREE.PerspectiveCamera( 50, aspect, 0.1, 1000 );
+    camera.position.set( 5, 2.5, 5 );
 
-    orbit = new OrbitControls( currentCamera, renderer.domElement );
+    orbit = new OrbitControls( camera, renderer.domElement );
     orbit.enableDamping = true;
     orbit.dampingFactor = 0.1;
     orbit.update();
-
-    currentCamera.position.set( 5, 2.5, 5 );
 
     window.addEventListener( 'resize', onWindowResize );
     window.addEventListener( 'keydown',  onWindowKey );
 }
 
-function toggleCamera() {
-    const position = currentCamera.position.clone();
+function createScene() {
+    sky = new Sky();
+    sky.scale.setScalar( 450000 );
 
-    currentCamera = currentCamera.isPerspectiveCamera ? cameraOrtho : cameraPersp;
-    currentCamera.position.copy( position );
-    currentCamera.updateProjectionMatrix();
+    const phi = THREE.MathUtils.degToRad( 90 );
+    const theta = THREE.MathUtils.degToRad( 180 );
+    const sunPosition = new THREE.Vector3().setFromSphericalCoords( 1, phi, theta );
 
-    orbit.object = currentCamera;
+    sky.material.uniforms.sunPosition.value = sunPosition;
 
-    currentCamera.lookAt( orbit.target.x, orbit.target.y, orbit.target.z );
-    onWindowResize();
+    scene.add( sky );
 
-    render();
+    const geometry = new THREE.PlaneGeometry( 64000, 64000 );
+    const material = new THREE.MeshStandardMaterial({
+        color: 0xffffff,
+        roughness: 0.9,
+        metalness: 0, 
+        side: THREE.DoubleSide
+    });
+    const plane = new THREE.Mesh( geometry, material );
+    plane.rotation.x = -Math.PI / 2;
+    plane.receiveShadow = true;
+    scene.add( plane );
 }
 
 function onWindowResize() {
     const aspect = window.innerWidth / window.innerHeight;
 
-    cameraPersp.aspect = aspect;
-    cameraPersp.updateProjectionMatrix();
-
-    cameraOrtho.left = -frustumSize * aspect;
-    cameraOrtho.right = frustumSize * aspect;
-    cameraOrtho.top = frustumSize;
-    cameraOrtho.bottom = -frustumSize;
-    cameraOrtho.updateProjectionMatrix();
+    camera.aspect = aspect;
+    camera.updateProjectionMatrix();
 
     renderer.setSize( window.innerWidth, window.innerHeight );
 
@@ -83,17 +80,12 @@ function onWindowResize() {
 }
 
 function onWindowKey(event) {
-    switch ( event.key ) {
-        case 'c':
-            toggleCamera();
-    };
+    
 }
 
 function render() {
     requestAnimationFrame( render );
 
     orbit.update();
-    renderer.render( scene, currentCamera );
+    renderer.render( scene, camera );
 }
-
-window.toggleCamera = toggleCamera;
