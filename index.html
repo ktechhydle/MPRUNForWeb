@@ -5,20 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>MPRUN for Web</title>
+    <link rel="icon" type="image/x-icon" href="resources/icons/logos/mprun_icon.png">
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <div id="info">
-      <img src="resources/icons/logos/mprun_icon.png" width=50>
-    </div>
-    <script type="importmap">
-      {
-        "imports": {
-          "three": "https://cdn.jsdelivr.net/npm/three@v0.174.0/build/three.module.js",
-          "three/addons/": "https://cdn.jsdelivr.net/npm/three@v0.174.0/examples/jsm/"
-        }
-      }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/fabric@latest/dist/index.min.js"></script>
+    <canvas id="scene"></canvas>
     <script type="module" src="src/app.js"></script>
   </body>
 </html>

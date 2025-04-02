@@ -8,16 +8,4 @@ body {
 
 canvas {
     display: block;
-    border-radius: 10px;
-}
-
-button {
-    padding: 10px;
-    margin: 5px;
-    cursor: pointer;
-}
-
-button.active {
-    background-color: #007bff;
-    color: white;
 }
