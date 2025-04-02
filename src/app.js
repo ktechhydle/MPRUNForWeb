@@ -1,1 +1,0 @@
-var scene = new fabric.Canvas('scene');
