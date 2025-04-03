@@ -1,8 +1,9 @@
-//import { CommandManager } from 'src/commands/manager';
+import { CommandManager } from './src/commands/manager.js';
+import { MoveItemCommand } from './src/commands/move_item_command.js';
 
 var scene = new fabric.Canvas('scene');
 scene.backgroundColor = '#1e1e1e';
-//var undo_stack = new CommandManager();
+var undo_stack = new CommandManager();
 
 let SELECT_TOOL = 0;
 let PATH_TOOL = 1;
@@ -99,9 +100,9 @@ function enableScene(enabled) {
 }
 
 function keyPress(event) {
-    /*const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-    const isUndo = (isMac ? event.metaKey : event.ctrlKey) && event.key === 'z' && !event.shiftKey;
-    const isRedo = (isMac ? event.metaKey : event.ctrlKey) && event.key === 'z' && event.shiftKey;
+    const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+    const isUndo = (isMac ? event.metaKey : event.ctrlKey) && event.key === 'z';
+    const isRedo = (isMac ? event.metaKey : event.ctrlKey) && event.key === 'y';
 
     if (isUndo) {
         event.preventDefault();
@@ -113,7 +114,7 @@ function keyPress(event) {
         event.preventDefault();
         console.log('Redo triggered');
         undo_stack.redo();
-    }*/
+    }
 }
 
 function updateTool(tool) {

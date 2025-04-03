@@ -1,4 +1,4 @@
-import { UndoCommand } from 'src/commands/base_command';
+import { UndoCommand } from './base_command.js';
 
 
 export class AddItemCommand extends UndoCommand {

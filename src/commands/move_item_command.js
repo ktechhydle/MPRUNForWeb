@@ -1,4 +1,4 @@
-import { UndoCommand } from 'src/commands/base_command';
+import { UndoCommand } from './base_command.js';
 
 
 export class MoveItemCommand extends UndoCommand {
@@ -18,7 +18,6 @@ export class MoveItemCommand extends UndoCommand {
                 item.position.copy(old_position);
             }
         }
-        this.scene.updateSelection();
     }
 
     redo() {
@@ -29,6 +28,5 @@ export class MoveItemCommand extends UndoCommand {
                 item.position.copy(new_position);
             }
         }
-        this.scene.updateSelection();
     }
 }
