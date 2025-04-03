@@ -1,6 +1,5 @@
-export class CommandManger {
+export class CommandManager {
     constructor() {
-        super();
         this.stack = [];
         this.new_stack = [];
         this.current_stack = [];
@@ -11,13 +10,14 @@ export class CommandManger {
     }
     
     undo() {
+        if (this.stack.length === 0) return;
         this.new_stack = this.stack.pop();
         this.current_stack = this.new_stack;
-        this.current_stack[length(this.current_stack) - 1].undo()
+        this.current_stack[this.current_stack.length - 1].undo();
     }
 
     redo() {
-        this.current_stack = this.stack;
-        this.current_stack[length(this.current_stack) - 1].redo()
+        if (this.current_stack.length === 0) return;
+        this.current_stack[this.current_stack.length - 1].redo();
     }
 }
