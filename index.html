@@ -9,13 +9,16 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <script src="https://cdn.jsdelivr.net/npm/fabric@latest/dist/index.min.js"></script>
     <canvas id="scene"></canvas>
     <div id="toolbar" class="floating-toolbar">
       <button id="select_tool" class="tool-button">Select Tool</button>
       <button id="path_tool" class="tool-button">Path Tool</button>
       <button id="label_tool" class="tool-button">Label Tool</button>
     </div>
+    <div id="panels" class="floating-panels">
+      <p>This is something</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/fabric@latest/dist/index.min.js"></script>
     <script>
       const buttons = document.querySelectorAll('.tool-button');
     

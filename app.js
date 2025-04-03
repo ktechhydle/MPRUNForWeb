@@ -70,8 +70,8 @@ scene.on('mouse:up', function(opt) {
 });
 
 function resizeScene() {
-    scene.setWidth(window.innerWidth);
-    scene.setHeight(window.innerHeight);
+    scene.setWidth(window.outerWidth);
+    scene.setHeight(window.outerHeight);
     scene.renderAll();
 }
 
