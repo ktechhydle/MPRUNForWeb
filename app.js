@@ -4,6 +4,12 @@ var scene = new fabric.Canvas('scene');
 scene.backgroundColor = '#1e1e1e';
 //var undo_stack = new CommandManager();
 
+let SELECT_TOOL = 0;
+let PATH_TOOL = 1;
+let LABEL_TOOL = 2;
+let TEXT_TOOL = 3;
+let current_tool = 0;
+
 function addDefaultObjects() {
     const rect = new fabric.Rect({
         left: 0,
@@ -29,6 +35,7 @@ function addDefaultObjects() {
     scene.add(text);
 }
 
+// scene zooming
 scene.on('mouse:wheel', function(opt) {
     var delta = opt.e.deltaY;
     var zoom = scene.getZoom();
@@ -41,6 +48,7 @@ scene.on('mouse:wheel', function(opt) {
     
 })
 
+// scene mouse funcs
 scene.on('mouse:down', function(opt) {
     var evt = opt.e;
     if (evt.shiftKey === true) {
@@ -66,12 +74,27 @@ scene.on('mouse:move', function(opt) {
 scene.on('mouse:up', function(opt) {
     this.setViewportTransform(this.viewportTransform);
     this.isDragging = false;
-    this.selection = true;
 });
 
 function resizeScene() {
     scene.setWidth(window.outerWidth);
     scene.setHeight(window.outerHeight);
+    scene.renderAll();
+}
+
+function enableScene(enabled) {
+    scene.forEachObject( function(object) {
+        if ( object.type !== 'rect' ) {
+            object.selectable = enabled;
+            object.evented = enabled;
+        }
+    });
+    scene.selection = enabled;
+
+    if ( !enabled ) {
+        scene.discardActiveObject();
+    }
+
     scene.renderAll();
 }
 
@@ -93,8 +116,35 @@ function keyPress(event) {
     }*/
 }
 
+function updateTool(tool) {
+    current_tool = tool;
+    console.log('Tool Changed To: ', tool)
+
+    if ( tool === SELECT_TOOL) {
+        enableScene(true);
+    } 
+    else if ( [PATH_TOOL, LABEL_TOOL].includes(tool) ) {
+        enableScene(false);
+    }
+    else if ( tool === TEXT_TOOL ) {
+        enableScene(false);
+
+        scene.forEachObject( function(object) {
+            if ( object.type === 'textbox' ) {
+                object.selectable = true;
+                object.hasControls = true; 
+                object.editable = true; 
+                object.evented = true;
+            }
+        });
+    
+        scene.renderAll();
+    }
+}
+
 resizeScene();
 addDefaultObjects();
 
 window.addEventListener('resize', resizeScene);
 window.addEventListener('keydown', keyPress);
+window.updateTool = updateTool;

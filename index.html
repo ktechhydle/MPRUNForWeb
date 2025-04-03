@@ -11,9 +11,10 @@
   <body>
     <canvas id="scene"></canvas>
     <div id="toolbar" class="floating-toolbar">
-      <button id="select_tool" class="tool-button">Select Tool</button>
-      <button id="path_tool" class="tool-button">Path Tool</button>
-      <button id="label_tool" class="tool-button">Label Tool</button>
+      <button id="select_tool" class="tool-button" onclick="updateTool(0)">Select Tool</button>
+      <button id="path_tool" class="tool-button" onclick="updateTool(1)">Path Tool</button>
+      <button id="label_tool" class="tool-button" onclick="updateTool(2)">Label Tool</button>
+      <button id="text_tool" class="tool-button" onclick="updateTool(3)">Text Tool</button>
     </div>
     <div id="panels" class="floating-panels">
       <div class="collapsible-container">
