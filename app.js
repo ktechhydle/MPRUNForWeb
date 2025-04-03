@@ -1,6 +1,7 @@
 //import { CommandManager } from 'src/commands/manager';
 
 var scene = new fabric.Canvas('scene');
+scene.backgroundColor = '#1e1e1e';
 //var undo_stack = new CommandManager();
 
 function addDefaultObjects() {

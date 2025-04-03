@@ -11,6 +11,23 @@
   <body>
     <script src="https://cdn.jsdelivr.net/npm/fabric@latest/dist/index.min.js"></script>
     <canvas id="scene"></canvas>
+    <div id="toolbar" class="floating-toolbar">
+      <button id="select_tool" class="tool-button">Select Tool</button>
+      <button id="path_tool" class="tool-button">Path Tool</button>
+      <button id="label_tool" class="tool-button">Label Tool</button>
+    </div>
+    <script>
+      const buttons = document.querySelectorAll('.tool-button');
+    
+      buttons.forEach(button => {
+        button.addEventListener('click', () => {
+          // Uncheck all buttons
+          buttons.forEach(btn => btn.classList.remove('checked'));
+          // Check the clicked button
+          button.classList.add('checked');
+        });
+      });
+    </script>
     <script type="module" src="app.js"></script>
   </body>
 </html>
