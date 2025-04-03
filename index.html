@@ -16,19 +16,22 @@
       <button id="label_tool" class="tool-button">Label Tool</button>
     </div>
     <div id="panels" class="floating-panels">
-      <p>This is something</p>
+      <div class="collapsible-container">
+        <button class="collapsible-button">Properties</button>
+        <div class="collapsible-content">
+          <p>properties</p>
+        </div>
+      </div>
+      <div class="collapsible-container">
+        <button class="collapsible-button">Course Elements</button>
+        <div class="collapsible-content">
+          <p>course elements</p>
+        </div>
+      </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/fabric@latest/dist/index.min.js"></script>
-    <script>
-      const buttons = document.querySelectorAll('.tool-button');
-    
-      buttons.forEach(button => {
-        button.addEventListener('click', () => {
-          buttons.forEach(btn => btn.classList.remove('checked'));
-          button.classList.add('checked');
-        });
-      });
-    </script>
+    <script type="module" src="src/gui/checkable_tool_buttons.js"></script>
+    <script type="module" src="src/gui/collapsible_panels.js"></script>
     <script type="module" src="app.js"></script>
   </body>
 </html>
