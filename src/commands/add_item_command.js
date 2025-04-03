@@ -3,6 +3,7 @@ import { UndoCommand } from 'src/commands/base_command';
 
 export class AddItemCommand extends UndoCommand {
     constructor(scene, items) {
+        super();
         this.scene = scene;
         this.items = items;
     }

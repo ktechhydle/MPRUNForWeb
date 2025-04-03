@@ -3,6 +3,7 @@ import { UndoCommand } from 'src/commands/base_command';
 
 export class EditTextCommand extends UndoCommand {
     constructor(item, new_text, old_text) {
+        super();
         this.item = item;
         this.new_text = new_text;
         this.old_text = old_text;

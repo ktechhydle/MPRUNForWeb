@@ -21,9 +21,7 @@
     
       buttons.forEach(button => {
         button.addEventListener('click', () => {
-          // Uncheck all buttons
           buttons.forEach(btn => btn.classList.remove('checked'));
-          // Check the clicked button
           button.classList.add('checked');
         });
       });
